@@ -4,7 +4,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-router-dom": "^4.3.1",
-    "homepage": "http://kedarbh.github.io/reactnd-project-myreads-starter",
+    "homepage": "https://kedarbh.github.io/reactnd-project-myreads-starter",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
