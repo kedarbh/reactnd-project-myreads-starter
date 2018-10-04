@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../.././BooksAPI'
 import sortBy from 'sort-by'
+import Book from '../Book/Book'
+//TODO: use of react debounce input
+//TODO: use of background image, either provide fallback or no image
+
 
 class Search extends React.Component {
+
     state = {
         query: '',
         results: []
@@ -23,14 +28,17 @@ class Search extends React.Component {
         BooksAPI.search(query).then((searchedBooks) => {
             if (searchedBooks.length > 0) {
                 searchedBooks.forEach((book) =>
-                    // set the shelf to none to every books
+                    // set the shelf to none to books not in shelf
                     book.shelf = 'none'
                 )
-                this.props.books.forEach((books) => {
-                    if (searchedBooks.id === books.id) {
-                        searchedBooks.shelf = books.shelf;
-                    }
-                })
+                searchedBooks.map((book)=> (
+                    this.props.books.forEach((books) => {
+                        // console.log(book.id, books.id);
+                        if (book.id === books.id) {
+                            book.shelf = books.shelf;
+                        }
+                    })
+                ))
                 this.setState({ results: searchedBooks })
             }
         })
@@ -54,24 +62,7 @@ class Search extends React.Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {results.sort(sortBy('title')).map((book) => (
-                            <li key={book.id} className='books-grid'>
-                                <div className="book">
-                                    <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
-                                        <div className="book-shelf-changer">
-                                            <select value={book.shelf} onChange={(event) => changeShelf(book, event)}>
-                                                <option value="move" disabled>Move to...</option>
-                                                <option value="currentlyReading">Currently Reading</option>
-                                                <option value="wantToRead">Want to Read</option>
-                                                <option value="read">Read</option>
-                                                <option value="none">None</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="book-title">{book.title}</div>
-                                    <div className="book-authors">{book.authors}</div>
-                                </div>
-                            </li>
+                            <Book book={book} key={book.id} changeShelf={changeShelf} />
                         ))}
                     </ol>
                 </div>
