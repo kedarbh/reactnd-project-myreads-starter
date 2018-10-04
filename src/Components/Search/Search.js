@@ -11,7 +11,8 @@ class Search extends React.Component {
 
     state = {
         query: '',
-        results: []
+        results: [],
+        error: false
     }
 
     updateQuery = (query) => {
@@ -20,7 +21,7 @@ class Search extends React.Component {
         if (query) {
             this.searchBooks(query)
         } else if (query === '') {
-            this.setState({ results: [] })
+            this.setState({ results: [], error: false })
         }
     }
 
@@ -40,12 +41,14 @@ class Search extends React.Component {
                     })
                 ))
                 this.setState({ results: searchedBooks })
+            } else {
+                this.setState({ error: true })
             }
         })
     }
 
     render() {
-        const {results} = this.state;
+        const {results, query, error} = this.state;
         const {changeShelf} = this.props;
 
         return (
@@ -61,9 +64,12 @@ class Search extends React.Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {results.sort(sortBy('title')).map((book) => (
+                        {!error && results.sort(sortBy('title')).map((book) => (
                             <Book book={book} key={book.id} changeShelf={changeShelf} />
                         ))}
+                        {error &&
+                            <li>Sorry no results found. Your search '<b>{query}</b>' did not match.</li>
+                        }
                     </ol>
                 </div>
             </div>
