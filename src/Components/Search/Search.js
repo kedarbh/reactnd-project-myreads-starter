@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import * as BooksAPI from '../.././BooksAPI'
 import sortBy from 'sort-by'
 import Book from '../Book/Book'
-//TODO: use of react debounce input
-//TODO: use of background image, either provide fallback or no image
-
+import { DebounceInput } from 'react-debounce-input'
 
 class Search extends React.Component {
 
@@ -42,7 +40,7 @@ class Search extends React.Component {
                 ))
                 this.setState({ results: searchedBooks })
             } else {
-                this.setState({ error: true })
+                this.setState({ error: true, results: [] })
             }
         })
     }
@@ -56,7 +54,9 @@ class Search extends React.Component {
                 <div className="search-books-bar">
                     <Link to="/" className="close-search">Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input type="text"
+                        <DebounceInput
+                            minLength={1}
+                            debounceTimeout={300}
                             placeholder="Search by title or author"
                             onChange={(event) => this.updateQuery(event.target.value)}
                         />

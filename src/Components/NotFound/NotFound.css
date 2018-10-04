@@ -1,0 +1,27 @@
+.notfound {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #099409d8;
+    cursor: pointer;
+    border: 1px solid #5cb85c;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 5px;
+    padding: 10px;
+}
+.button:hover {
+    background-color: #209120;
+}
+
+.button a {
+    text-decoration: none;
+    color: rgb(245, 243, 243);
+    letter-spacing: 4px;
+}

@@ -1,9 +1,10 @@
 import React from 'react';
+import Author from './Author';
 
 function Book(props) {
     const { book, changeShelf } = props;
     // console.log(book.imageLinks.thumbnail);
-    // console.log(book.authors)
+    // console.log(book.id)
     return (
         <li>
             <div className="book">
@@ -24,7 +25,8 @@ function Book(props) {
                     </div>
                 </div>
                 <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
+                <Author authors={book.authors}/>
+                {/* <div className="book-authors">{book.authors}</div> */}
             </div>
         </li>
     )
